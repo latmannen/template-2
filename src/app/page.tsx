@@ -1,48 +1,45 @@
-import Link from "next/link";
+"use client";
+
+import { DeepgramContextProvider } from "@/lib/contexts/DeepgramContext";
+import VoiceRecorder from "@/components/VoiceRecorder";
+import VoiceNotesList from "@/components/VoiceNotesList";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
-      <div>
-        <h2 className="text-2xl font-semibold text-center border p-4 font-mono rounded-md">
-          Get started by choosing a template path from the /paths/ folder.
-        </h2>
-      </div>
-      <div>
-        <h1 className="text-6xl font-bold text-center">Make anything you imagine 🪄</h1>
-        <h2 className="text-2xl text-center font-light text-gray-500 pt-4">
-          This whole page will be replaced when you run your template path.
-        </h2>
-      </div>
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="border rounded-lg p-6 hover:bg-gray-100 transition-colors">
-          <h3 className="text-xl font-semibold">AI Chat App</h3>
-          <p className="mt-2 text-sm text-gray-600">
-            An intelligent conversational app powered by AI models, featuring real-time responses
-            and seamless integration with Next.js and various AI providers.
-          </p>
+    <DeepgramContextProvider>
+      <main className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-slate-100 dark:from-gray-900 dark:via-indigo-950/20 dark:to-gray-800 bg-gradient-animate">
+        <div className="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+          <header className="text-center mb-12">
+            <h1 className="text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 mb-3">
+              Voice Notes
+            </h1>
+            <p className="text-slate-600 dark:text-slate-300 text-lg max-w-2xl mx-auto">
+              Capture your thoughts effortlessly with voice-to-text
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-5">
+              <div className="sticky top-8">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-slate-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm bg-opacity-80 dark:bg-opacity-80">
+                  <div className="p-6">
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">Record a Note</h2>
+                    <VoiceRecorder />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="lg:col-span-7">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-slate-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm bg-opacity-80 dark:bg-opacity-80">
+                <div className="p-6">
+                  <VoiceNotesList />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="border rounded-lg p-6 hover:bg-gray-100 transition-colors">
-          <h3 className="text-xl font-semibold">AI Image Generation App</h3>
-          <p className="mt-2 text-sm text-gray-600">
-            Create images from text prompts using AI, powered by the Replicate API and Next.js.
-          </p>
-        </div>
-        <div className="border rounded-lg p-6 hover:bg-gray-100 transition-colors">
-          <h3 className="text-xl font-semibold">Social Media App</h3>
-          <p className="mt-2 text-sm text-gray-600">
-            A feature-rich social platform with user profiles, posts, and interactions using
-            Firebase and Next.js.
-          </p>
-        </div>
-        <div className="border rounded-lg p-6 hover:bg-gray-100 transition-colors">
-          <h3 className="text-xl font-semibold">Voice Notes App</h3>
-          <p className="mt-2 text-sm text-gray-600">
-            A voice-based note-taking app with real-time transcription using Deepgram API, 
-            Firebase integration for storage, and a clean, simple interface built with Next.js.
-          </p>
-        </div>
-      </div>
-    </main>
+      </main>
+    </DeepgramContextProvider>
   );
 }
