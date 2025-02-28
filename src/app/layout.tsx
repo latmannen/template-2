@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
+import { NotificationProvider } from "@/lib/contexts/NotificationContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +17,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark:bg-gray-900">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script id="theme-script" strategy="beforeInteractive">
+          {`
+            (function() {
+              try {
+                const darkMode = localStorage.getItem('darkMode');
+                if (darkMode === 'true') {
+                  document.documentElement.classList.add('dark');
+                } else if (darkMode === null) {
+                  // Check system preference
+                  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('darkMode', 'true');
+                  }
+                }
+              } catch (e) {
+                console.error('Dark mode initialization failed:', e);
+              }
+            })();
+          `}
+        </Script>
+      </head>
       <body className={`${inter.className} antialiased`}>
-        {children}
+        <NotificationProvider>
+          {children}
+        </NotificationProvider>
       </body>
     </html>
   );

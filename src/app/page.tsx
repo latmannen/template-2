@@ -1,22 +1,40 @@
 "use client";
 
 import { DeepgramContextProvider } from "@/lib/contexts/DeepgramContext";
-import VoiceRecorder from "@/components/VoiceRecorder";
-import VoiceNotesList from "@/components/VoiceNotesList";
+import dynamic from 'next/dynamic';
+import PageHeader from "@/components/PageHeader";
+import ThemeToggle from "@/components/ThemeToggle";
+
+// Dynamic imports to improve initial load performance
+const VoiceRecorder = dynamic(() => import('@/components/VoiceRecorder'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-40 flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-500 rounded-full animate-spin"></div>
+    </div>
+  )
+});
+
+const VoiceNotesList = dynamic(() => import('@/components/VoiceNotesList'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-40 flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-500 rounded-full animate-spin"></div>
+    </div>
+  )
+});
 
 export default function Home() {
   return (
     <DeepgramContextProvider>
       <main className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-slate-100 dark:from-gray-900 dark:via-indigo-950/20 dark:to-gray-800 bg-gradient-animate">
+        <ThemeToggle />
+        
         <div className="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <header className="text-center mb-12">
-            <h1 className="text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 mb-3">
-              Voice Notes
-            </h1>
-            <p className="text-slate-600 dark:text-slate-300 text-lg max-w-2xl mx-auto">
-              Capture your thoughts effortlessly with voice-to-text
-            </p>
-          </header>
+          <PageHeader 
+            title="Voice Notes"
+            subtitle="Capture your thoughts effortlessly with voice-to-text"
+          />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-5">
